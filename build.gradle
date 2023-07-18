@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+}
+
+group 'ua.ithillel.gradle'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+//    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+
+task myTask {
+    doLast {
+//        println project.absoluteProjectPath()
+        String name = "$rootProject.name:$rootProject.version"
+        File newFile = new File(name)
+
+        if (!newFile.exists()) {
+            newFile.createNewFile();
+        }
+
+        newFile.text += "Building project $project.name:$project.version"
+
+        println("Task completed")
+
+        println "Success"
+
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+   dependsOn myTask
+}
+
